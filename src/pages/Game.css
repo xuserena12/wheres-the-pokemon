@@ -1,0 +1,18 @@
+.background {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.character-display {
+  background-color: #dce0f5;
+  padding-top: 20px;
+  padding-bottom: 20px;  
+}
+
+.character-image {
+  width: 90px;
+  height: 90px;
+}
