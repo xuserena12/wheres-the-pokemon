@@ -4,45 +4,60 @@ import Evee from '../assets/images/evee.png';
 import Psyduck from '../assets/images/psyduck.png';
 import Togepi from '../assets/images/togepi.png';
 import './Game.css';
-
-// importing stuff that we need
-import { db } from "../config/firebase";
-import { getDocs, collection } from "firebase/firestore";
-
-// just doing some testing with firebase!
+import getPokemonCoordinates from "../utils/getCharacterCoordinates";
 
 
 const Game = () => {
   const [showTargetBox, setShowTargetBox] = useState(false);
   const [currentCoords, setCurrentCoords] = useState({x: null, y: null}); // actual position on the screen
 
-  const [relativeCoords, setRelativeCoords] = useState({ x: null, y: null}); // the relative coords, will be same on any screen
+  const [eveeCoords, setEveeCoords] = useState({});
+  const [psyduckCoords, setPsyduckCoords] = useState({});
+  const [togepiCoords, setTogepiCoords] = useState({});
 
-  const [names, setCoordinates ] = useState([]);
-  const leaderboardCollectionRef = collection(db, "leaderboard");
+  const [foundEvee, setFoundEvee] = useState(false);
+  const [foundPsyduck, setFoundPsyduck] = useState(false);
+  const [foundTogepi, setFoundTogepi] = useState(false);
+
+  const [showWinMessage, setShowWinMessage] = useState(false);
+
 
   useEffect(() => {
-    const getNameList = async () => {
-    // Read the data
-    // set the movie list
-      try {
-        const data = await getDocs(leaderboardCollectionRef);
-        const filteredData = data.docs.map((doc) => ({
-          ...doc.data(), id: doc.id
-        }));
-        console.log(filteredData);
-      } catch (err) {
-        console.error(err);
+    const fetchCoordinates = async () => {
+      const eveeData = await getPokemonCoordinates("evee-coordinates");
+      const psyduckData = await getPokemonCoordinates("psyduck-coordinates");
+      const togepiData = await getPokemonCoordinates("togepi-coordinates");
+  
+      setEveeCoords(eveeData);
+      setPsyduckCoords(psyduckData);
+      setTogepiCoords(togepiData);
+
+      if (foundEvee && foundPsyduck && foundTogepi) {
+        setShowWinMessage(true);
       }
     };
 
-    getNameList();
+    fetchCoordinates();
+  }, [foundEvee, foundPsyduck, foundTogepi]);
 
-  }, []);
+  const checkClickedCharacter = (relativeX, relativeY, characterCoords) => {
+    if (
+      relativeX >= characterCoords["min-x"] &&
+      relativeX <= characterCoords["max-x"] &&
+      relativeY >= characterCoords["min-y"] &&
+      relativeY <= characterCoords["max-y"]
+    ) {
+      console.log("Yayy")
+      return true;
+    } else {
+      console.log("Nooo")
+      return false;
+    }
+  };
 
   const handleImageClick = (e) => {
     e.preventDefault();
-    const {width,height } = e.target.getBoundingClientRect();
+    const { width,height } = e.target.getBoundingClientRect();
     const difference = e.target.getBoundingClientRect();
     const clickedX = e.clientX - difference.left;
     const clickedY = e.clientY - difference.top;
@@ -52,9 +67,16 @@ const Game = () => {
     console.log(relativeX);
     console.log(relativeY);
     setCurrentCoords({ x: clickedX, y: clickedY });
-    setRelativeCoords({x: relativeX, y: relativeY});
     setShowTargetBox(true);
-  }
+
+    if (checkClickedCharacter(relativeX, relativeY, eveeCoords)) {
+      setFoundEvee(true); // Set foundEvee to true if Evee is clicked
+    } else if (checkClickedCharacter(relativeX, relativeY, psyduckCoords)) {
+      setFoundPsyduck(true);
+    } else if (checkClickedCharacter(relativeX, relativeY, togepiCoords)) {
+      setFoundTogepi(true);
+    }
+}
   
   
   return (
@@ -79,7 +101,7 @@ const Game = () => {
         alt="togepi"
         />
       </div>
-      <div style={{ position: 'relative', display: 'inline-block' }}>
+      <div style={{ position: 'relative', display: 'inline-block', cursor: 'pointer' }}>
         <img
           src={background}
           id="image"
@@ -102,6 +124,11 @@ const Game = () => {
           />
         )}
       </div>
+      {/* { showWinMessage && (
+        <div>
+          You Win!!
+        </div>
+      )} */}
     </div>
   );
 }
