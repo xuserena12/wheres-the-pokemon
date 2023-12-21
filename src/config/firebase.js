@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// tell firebase to have access to firestore
 
 const firebaseConfig = {
   apiKey: "AIzaSyAaZN-fYJxpRygCBly1UfC-tiXbwXtiazA",

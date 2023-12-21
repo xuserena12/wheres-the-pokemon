@@ -1,3 +1,7 @@
+.game-container {
+  position: relative;
+}
+
 .background {
   display: block;
   width: 100%;
@@ -9,10 +13,18 @@
 .character-display {
   background-color: #dce0f5;
   padding-top: 20px;
-  padding-bottom: 20px;  
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .character-image {
   width: 90px;
   height: 90px;
 }
+
+.crossed-out {
+  text-decoration: line-through;
+}
+
+
