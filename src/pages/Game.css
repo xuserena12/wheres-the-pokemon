@@ -18,6 +18,10 @@
   justify-content: center;
 }
 
+.timer {
+  background-color: #dce0f5;
+}
+
 .character-image {
   width: 90px;
   height: 90px;

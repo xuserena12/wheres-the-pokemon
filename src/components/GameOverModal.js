@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './GameOverModal.css';
 
 function GameOverModal( { handleCloseModal } ) {
-  let [isOpen, setIsOpen] = useState(true)
+  let [isOpen, setIsOpen] = useState(true);
 
   return (
       <div className="modal-overlay">
@@ -10,7 +10,7 @@ function GameOverModal( { handleCloseModal } ) {
           <span className="close-modal" onClick={handleCloseModal}>
             &times;
           </span>
-          <p>Game Over!!</p>
+          <p>You Win!</p>
         </div>
     </div>
   );

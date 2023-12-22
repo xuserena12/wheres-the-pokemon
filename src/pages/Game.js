@@ -6,6 +6,7 @@ import Togepi from '../assets/images/togepi.png';
 import './Game.css';
 import getCharacterCoordinates from "../utils/getCharacterCoordinates";
 import GameOverModal from '../components/GameOverModal';
+import Timer from '../components/Timer';
 
 
 const Game = () => {
@@ -84,6 +85,7 @@ const Game = () => {
   
   return (
     <div className="game-container">
+      <Timer gameWon={showWinMessage}/>
       <div className="character-display">
         <img
         src={Evee}
