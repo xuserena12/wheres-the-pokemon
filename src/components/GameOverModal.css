@@ -24,3 +24,17 @@
   top: 10px;
   right: 15px;
 }
+
+.time-input {
+  margin-left: 5px;
+}
+
+.submit {
+  margin-left: 5px;
+  padding: 10px 10px;
+  background-color: #bda7cd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
