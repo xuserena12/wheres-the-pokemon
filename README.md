@@ -1,1 +1,1 @@
-#Where's Waldo, reimagined#
+# Where's Waldo, reimagined #
